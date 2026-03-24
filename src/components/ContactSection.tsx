@@ -1,27 +1,66 @@
-import { motion } from "framer-motion";
-import { Mail, Linkedin, Twitter } from "lucide-react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { Mail, Linkedin, Twitter, Send } from "lucide-react";
+import { useRef } from "react";
+import ContactScene from "./ContactScene";
 
 const ContactSection = () => {
+  const sectionRef = useRef(null);
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
+  const scaleSection = useTransform(scrollYProgress, [0, 0.4], [0.9, 1]);
+  const rotateX = useTransform(scrollYProgress, [0, 0.4], [6, 0]);
+  const orbRotate = useTransform(scrollYProgress, [0, 1], [0, 360]);
+
   return (
-    <section id="contact" className="py-28 px-6 md:px-16 lg:px-24 relative overflow-hidden">
-      {/* Glow orbs */}
+    <section id="contact" ref={sectionRef} className="py-28 px-6 md:px-16 lg:px-24 relative overflow-hidden">
+      {/* 3D Scene */}
+      <ContactScene />
+
+      {/* Rotating border ring */}
       <motion.div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full blur-[150px] pointer-events-none"
-        style={{ background: "hsl(32 100% 55% / 0.06)" }}
-        animate={{ scale: [1, 1.2, 1] }}
-        transition={{ duration: 6, repeat: Infinity }}
+        style={{ rotate: orbRotate }}
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full border border-primary/5 pointer-events-none"
       />
       <motion.div
-        className="absolute bottom-0 right-0 w-60 h-60 rounded-full blur-[100px] pointer-events-none"
-        style={{ background: "hsl(260 60% 55% / 0.04)" }}
+        style={{ rotate: orbRotate }}
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full border border-secondary/5 pointer-events-none"
       />
 
-      <div className="max-w-4xl mx-auto text-center relative">
+      {/* Glow orbs */}
+      <motion.div
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full blur-[150px] pointer-events-none"
+        style={{ background: "hsl(32 100% 55% / 0.07)" }}
+        animate={{ scale: [1, 1.3, 1], opacity: [0.5, 0.8, 0.5] }}
+        transition={{ duration: 5, repeat: Infinity }}
+      />
+
+      {/* Floating particles */}
+      {[...Array(8)].map((_, i) => (
         <motion.div
-          initial={{ opacity: 0, y: 60, scale: 0.9 }}
+          key={i}
+          className="absolute w-1 h-1 rounded-full bg-primary/25"
+          style={{
+            top: `${15 + (i * 37) % 70}%`,
+            left: `${10 + (i * 43) % 80}%`,
+          }}
+          animate={{
+            y: [0, -20 - (i % 3) * 10, 0],
+            x: [0, (i % 2 ? 15 : -15), 0],
+            opacity: [0.1, 0.5, 0.1],
+            scale: [1, 1.5, 1],
+          }}
+          transition={{ duration: 5 + i * 0.7, repeat: Infinity, delay: i * 0.4 }}
+        />
+      ))}
+
+      <motion.div
+        style={{ scale: scaleSection, rotateX, transformStyle: "preserve-3d", perspective: "1200px" }}
+        className="max-w-4xl mx-auto text-center relative z-10"
+      >
+        <motion.div
+          initial={{ opacity: 0, y: 80, scale: 0.85 }}
           whileInView={{ opacity: 1, y: 0, scale: 1 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
         >
           <motion.div
             initial={{ width: 0 }}
@@ -31,56 +70,102 @@ const ContactSection = () => {
           />
           <p className="text-primary font-medium tracking-[0.3em] uppercase text-xs mb-4">Get In Touch</p>
 
-          <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6 leading-tight">
-            Let's build something{" "}
-            <motion.span
-              className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent inline-block"
-              whileInView={{ rotate: [0, -2, 2, 0] }}
+          <div className="overflow-hidden mb-2">
+            <motion.h2
+              initial={{ y: 80 }}
+              whileInView={{ y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: 0.5, duration: 0.8 }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-tight"
             >
-              great
-            </motion.span>{" "}
-            together.
-          </h2>
-          <p className="text-muted-foreground text-lg max-w-lg mx-auto mb-12">
+              Let's build something
+            </motion.h2>
+          </div>
+          <div className="overflow-hidden mb-8">
+            <motion.h2
+              initial={{ y: 80 }}
+              whileInView={{ y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+              className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-tight"
+            >
+              <motion.span
+                className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent inline-block"
+                whileInView={{ rotate: [0, -3, 3, 0], scale: [1, 1.05, 1] }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.7, duration: 0.8 }}
+              >
+                great
+              </motion.span>{" "}
+              together.
+            </motion.h2>
+          </div>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.4 }}
+            className="text-muted-foreground text-lg max-w-lg mx-auto mb-12"
+          >
             Whether you need a full marketing strategy or help with a specific campaign,
             I'd love to hear about your project.
-          </p>
+          </motion.p>
 
           <motion.a
             href="mailto:hello@swayambudake.com"
-            whileHover={{ scale: 1.05, boxShadow: "0 0 50px hsl(32 100% 55% / 0.3)" }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.5 }}
+            whileHover={{
+              scale: 1.06,
+              boxShadow: "0 0 60px hsl(32 100% 55% / 0.35), 0 0 120px hsl(32 100% 55% / 0.1)",
+            }}
             whileTap={{ scale: 0.97 }}
-            className="inline-flex items-center gap-3 bg-primary text-primary-foreground px-10 py-4 rounded-full text-lg font-semibold mb-14 transition-all"
+            className="inline-flex items-center gap-3 bg-gradient-to-r from-primary to-primary/90 text-primary-foreground px-10 py-4 rounded-full text-lg font-semibold mb-14 transition-all relative overflow-hidden group"
           >
-            <Mail className="w-5 h-5" />
-            Say Hello
+            {/* Button shine effect */}
+            <motion.div
+              className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full"
+              animate={{ x: ["-100%", "200%"] }}
+              transition={{ duration: 3, repeat: Infinity, repeatDelay: 2 }}
+            />
+            <Send className="w-5 h-5 relative z-10" />
+            <span className="relative z-10">Say Hello</span>
           </motion.a>
 
-          <div className="flex justify-center gap-4">
+          <div className="flex justify-center gap-5">
             {[
-              { icon: Linkedin, href: "#" },
-              { icon: Twitter, href: "#" },
-              { icon: Mail, href: "mailto:hello@swayambudake.com" },
-            ].map(({ icon: Icon, href }, i) => (
+              { icon: Linkedin, href: "#", label: "LinkedIn" },
+              { icon: Twitter, href: "#", label: "Twitter" },
+              { icon: Mail, href: "mailto:hello@swayambudake.com", label: "Email" },
+            ].map(({ icon: Icon, href, label }, i) => (
               <motion.a
-                key={i}
+                key={label}
                 href={href}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, y: 30, scale: 0.5 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
                 viewport={{ once: true }}
-                transition={{ delay: 0.3 + i * 0.1 }}
-                whileHover={{ scale: 1.15, y: -3, borderColor: "hsl(32 100% 55% / 0.5)" }}
+                transition={{ delay: 0.6 + i * 0.12, type: "spring", stiffness: 200 }}
+                whileHover={{
+                  scale: 1.2,
+                  y: -5,
+                  boxShadow: "0 10px 30px -5px hsl(32 100% 55% / 0.2)",
+                }}
                 whileTap={{ scale: 0.9 }}
-                className="text-muted-foreground hover:text-primary transition-colors p-3 rounded-full border border-border hover:bg-primary/5"
+                className="text-muted-foreground hover:text-primary transition-colors p-3.5 rounded-full border border-border hover:border-primary/40 hover:bg-primary/5 relative group"
               >
-                <Icon className="w-5 h-5" />
+                <Icon className="w-5 h-5 relative z-10" />
+                {/* Tooltip */}
+                <span className="absolute -top-8 left-1/2 -translate-x-1/2 text-[10px] tracking-wider uppercase text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                  {label}
+                </span>
               </motion.a>
             ))}
           </div>
         </motion.div>
-      </div>
+      </motion.div>
     </section>
   );
 };
