@@ -1,10 +1,42 @@
-import { useRef, useMemo } from "react";
+import { useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Float, Sphere, Torus, Cylinder, RoundedBox } from "@react-three/drei";
+import { Float, RoundedBox, Sphere, Cylinder } from "@react-three/drei";
 import * as THREE from "three";
 
-/* Funnel - represents marketing/sales funnel */
-const MarketingFunnel = () => {
+/* TikTok-inspired icon - music note on dark tile */
+const TikTokIcon = () => {
+  const ref = useRef<THREE.Group>(null);
+  useFrame((state) => {
+    if (ref.current) {
+      ref.current.rotation.y = state.clock.elapsedTime * 0.25;
+      ref.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.3) * 0.08;
+    }
+  });
+  return (
+    <Float speed={1.5} rotationIntensity={0.3} floatIntensity={0.8}>
+      <group ref={ref} position={[0, 0, 0]}>
+        <RoundedBox args={[0.9, 0.9, 0.16]} radius={0.15}>
+          <meshStandardMaterial color="#010101" roughness={0.1} metalness={0.95} />
+        </RoundedBox>
+        {/* Music note stem */}
+        <Cylinder args={[0.03, 0.03, 0.4, 8]} position={[0.08, 0.05, 0.1]}>
+          <meshStandardMaterial color="#25F4EE" roughness={0.1} metalness={0.9} />
+        </Cylinder>
+        {/* Note head */}
+        <Sphere args={[0.08, 12, 12]} position={[-0.02, -0.15, 0.1]}>
+          <meshStandardMaterial color="#FE2C55" roughness={0.1} metalness={0.9} />
+        </Sphere>
+        {/* Shadow note (red offset) */}
+        <Cylinder args={[0.025, 0.025, 0.4, 8]} position={[0.12, 0.08, 0.08]}>
+          <meshStandardMaterial color="#FE2C55" roughness={0.1} metalness={0.9} transparent opacity={0.7} />
+        </Cylinder>
+      </group>
+    </Float>
+  );
+};
+
+/* Pinterest-inspired icon - red circle with pin */
+const PinterestIcon = () => {
   const ref = useRef<THREE.Group>(null);
   useFrame((state) => {
     if (ref.current) {
@@ -12,79 +44,53 @@ const MarketingFunnel = () => {
     }
   });
   return (
-    <Float speed={1.2} floatIntensity={0.8}>
-      <group ref={ref} position={[0, 0, 0]}>
-        {/* Funnel layers - wider at top, narrow at bottom */}
-        {[
-          { r: 1.0, y: 0.8, h: 0.15, color: "#7c4dff", op: 0.5 },
-          { r: 0.75, y: 0.4, h: 0.15, color: "#7c4dff", op: 0.6 },
-          { r: 0.5, y: 0.0, h: 0.15, color: "#e08030", op: 0.7 },
-          { r: 0.3, y: -0.4, h: 0.15, color: "#e08030", op: 0.85 },
-        ].map((layer, i) => (
-          <Cylinder key={i} args={[layer.r, layer.r * 0.85, layer.h, 32]} position={[0, layer.y, 0]}>
-            <meshStandardMaterial color={layer.color} roughness={0.15} metalness={0.85} transparent opacity={layer.op} />
-          </Cylinder>
-        ))}
-        {/* Dripping leads at bottom */}
-        {[0, 1, 2].map((i) => (
-          <Sphere key={i} args={[0.06, 8, 8]} position={[0, -0.8 - i * 0.2, 0]}>
-            <meshStandardMaterial color="#e08030" emissive="#e08030" emissiveIntensity={0.6} transparent opacity={0.7 - i * 0.2} />
-          </Sphere>
-        ))}
-      </group>
-    </Float>
-  );
-};
-
-/* Pie chart - represents analytics */
-const PieChart3D = () => {
-  const ref = useRef<THREE.Group>(null);
-  useFrame((state) => {
-    if (ref.current) {
-      ref.current.rotation.y = state.clock.elapsedTime * 0.3;
-      ref.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.2) * 0.1;
-    }
-  });
-  const segments = [
-    { start: 0, length: Math.PI * 0.8, color: "#e08030" },
-    { start: Math.PI * 0.8, length: Math.PI * 0.5, color: "#7c4dff" },
-    { start: Math.PI * 1.3, length: Math.PI * 0.7, color: "#f0a050" },
-  ];
-  return (
-    <Float speed={1.8} rotationIntensity={0.3} floatIntensity={0.6}>
-      <group ref={ref} position={[-2, 1, -1.5]} scale={0.5}>
-        {segments.map((seg, i) => (
-          <mesh key={i}>
-            <cylinderGeometry args={[0.8, 0.8, 0.15, 32, 1, false, seg.start, seg.length]} />
-            <meshStandardMaterial color={seg.color} roughness={0.2} metalness={0.8} />
-          </mesh>
-        ))}
-      </group>
-    </Float>
-  );
-};
-
-/* Floating @ symbol rings - email marketing */
-const EmailRings = () => {
-  const ref = useRef<THREE.Group>(null);
-  useFrame((state) => {
-    if (ref.current) {
-      ref.current.rotation.y = state.clock.elapsedTime * 0.15;
-      ref.current.rotation.z = Math.sin(state.clock.elapsedTime * 0.3) * 0.1;
-    }
-  });
-  return (
-    <Float speed={1.5} floatIntensity={0.5}>
-      <group ref={ref} position={[2.2, -0.8, -1]}>
-        <Torus args={[0.35, 0.05, 16, 32]}>
-          <meshStandardMaterial color="#e08030" roughness={0.15} metalness={0.9} />
-        </Torus>
-        <mesh position={[0.2, 0, 0]}>
-          <torusGeometry args={[0.2, 0.04, 16, 32, Math.PI * 1.5]} />
-          <meshStandardMaterial color="#7c4dff" roughness={0.2} metalness={0.85} />
+    <Float speed={1.8} rotationIntensity={0.25} floatIntensity={0.6}>
+      <group ref={ref} position={[-2, 0.8, -1.5]}>
+        <Sphere args={[0.45, 32, 32]}>
+          <meshStandardMaterial color="#E60023" roughness={0.12} metalness={0.88} />
+        </Sphere>
+        {/* Pin shape */}
+        <Cylinder args={[0.035, 0.035, 0.35, 8]} position={[0, -0.02, 0.38]}>
+          <meshStandardMaterial color="#ffffff" roughness={0.1} metalness={0.9} />
+        </Cylinder>
+        <mesh position={[0, 0.15, 0.4]}>
+          <torusGeometry args={[0.08, 0.03, 8, 16, Math.PI]} />
+          <meshStandardMaterial color="#ffffff" roughness={0.1} metalness={0.9} />
         </mesh>
-        <Sphere args={[0.04, 8, 8]} position={[0.2, -0.2, 0]}>
-          <meshStandardMaterial color="#7c4dff" roughness={0.2} metalness={0.85} />
+      </group>
+    </Float>
+  );
+};
+
+/* Snapchat-inspired icon - yellow rounded square with ghost */
+const SnapchatIcon = () => {
+  const ref = useRef<THREE.Group>(null);
+  useFrame((state) => {
+    if (ref.current) {
+      ref.current.rotation.y = state.clock.elapsedTime * 0.22;
+      ref.current.rotation.z = Math.sin(state.clock.elapsedTime * 0.4) * 0.05;
+    }
+  });
+  return (
+    <Float speed={2} rotationIntensity={0.35} floatIntensity={0.9}>
+      <group ref={ref} position={[2.2, -0.6, -1]}>
+        <RoundedBox args={[0.7, 0.7, 0.14]} radius={0.14}>
+          <meshStandardMaterial color="#FFFC00" roughness={0.15} metalness={0.8} />
+        </RoundedBox>
+        {/* Ghost body */}
+        <Sphere args={[0.18, 16, 16]} position={[0, 0.04, 0.09]}>
+          <meshStandardMaterial color="#ffffff" roughness={0.2} metalness={0.7} />
+        </Sphere>
+        {/* Ghost base */}
+        <Cylinder args={[0.18, 0.2, 0.1, 16]} position={[0, -0.1, 0.09]}>
+          <meshStandardMaterial color="#ffffff" roughness={0.2} metalness={0.7} />
+        </Cylinder>
+        {/* Eyes */}
+        <Sphere args={[0.025, 8, 8]} position={[-0.06, 0.06, 0.24]}>
+          <meshStandardMaterial color="#010101" />
+        </Sphere>
+        <Sphere args={[0.025, 8, 8]} position={[0.06, 0.06, 0.24]}>
+          <meshStandardMaterial color="#010101" />
         </Sphere>
       </group>
     </Float>
@@ -94,13 +100,14 @@ const EmailRings = () => {
 const WorkScene = () => (
   <div className="absolute inset-0 z-0 pointer-events-none opacity-60">
     <Canvas camera={{ position: [0, 0, 5], fov: 45 }} dpr={[1, 1.5]}>
-      <ambientLight intensity={0.25} />
-      <directionalLight position={[5, 3, 5]} intensity={0.5} color="#fff0e0" />
-      <pointLight position={[-3, 2, 2]} intensity={0.4} color="#e08030" />
-      <pointLight position={[3, -2, 1]} intensity={0.3} color="#7c4dff" />
-      <MarketingFunnel />
-      <PieChart3D />
-      <EmailRings />
+      <ambientLight intensity={0.3} />
+      <directionalLight position={[5, 3, 5]} intensity={0.6} color="#fff0e0" />
+      <pointLight position={[-3, 2, 2]} intensity={0.4} color="#FE2C55" />
+      <pointLight position={[3, -2, 1]} intensity={0.3} color="#E60023" />
+      <pointLight position={[0, 0, 3]} intensity={0.2} color="#FFFC00" />
+      <TikTokIcon />
+      <PinterestIcon />
+      <SnapchatIcon />
     </Canvas>
   </div>
 );
