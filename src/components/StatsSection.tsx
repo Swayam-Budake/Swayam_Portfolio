@@ -1,5 +1,6 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
+import StatsScene from "./StatsScene";
 
 const stats = [
   { value: "50+", label: "Campaigns Delivered" },
