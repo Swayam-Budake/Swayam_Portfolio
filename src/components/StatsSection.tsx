@@ -1,5 +1,6 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
+import StatsScene from "./StatsScene";
 
 const stats = [
   { value: "50+", label: "Campaigns Delivered" },
@@ -16,6 +17,7 @@ const StatsSection = () => {
 
   return (
     <section ref={ref} className="py-24 px-6 md:px-16 lg:px-24 relative overflow-hidden">
+      <StatsScene />
       {/* Horizontal glow line */}
       <motion.div
         className="absolute top-0 left-0 w-full h-[1px]"
