@@ -1,74 +1,93 @@
 import { useRef, useMemo } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Float, MeshDistortMaterial, Torus, Sphere, Box } from "@react-three/drei";
+import { Float, Sphere, Torus, Cylinder, RoundedBox } from "@react-three/drei";
 import * as THREE from "three";
 
-const SpinningTorus = () => {
-  const ref = useRef<THREE.Mesh>(null);
+/* Funnel - represents marketing/sales funnel */
+const MarketingFunnel = () => {
+  const ref = useRef<THREE.Group>(null);
   useFrame((state) => {
     if (ref.current) {
-      ref.current.rotation.x = state.clock.elapsedTime * 0.4;
       ref.current.rotation.y = state.clock.elapsedTime * 0.2;
     }
   });
   return (
     <Float speed={1.2} floatIntensity={0.8}>
-      <Torus ref={ref} args={[1, 0.3, 32, 64]} position={[0, 0, 0]}>
-        <meshStandardMaterial color="#e08030" roughness={0.15} metalness={0.85} wireframe />
-      </Torus>
+      <group ref={ref} position={[0, 0, 0]}>
+        {/* Funnel layers - wider at top, narrow at bottom */}
+        {[
+          { r: 1.0, y: 0.8, h: 0.15, color: "#7c4dff", op: 0.5 },
+          { r: 0.75, y: 0.4, h: 0.15, color: "#7c4dff", op: 0.6 },
+          { r: 0.5, y: 0.0, h: 0.15, color: "#e08030", op: 0.7 },
+          { r: 0.3, y: -0.4, h: 0.15, color: "#e08030", op: 0.85 },
+        ].map((layer, i) => (
+          <Cylinder key={i} args={[layer.r, layer.r * 0.85, layer.h, 32]} position={[0, layer.y, 0]}>
+            <meshStandardMaterial color={layer.color} roughness={0.15} metalness={0.85} transparent opacity={layer.op} />
+          </Cylinder>
+        ))}
+        {/* Dripping leads at bottom */}
+        {[0, 1, 2].map((i) => (
+          <Sphere key={i} args={[0.06, 8, 8]} position={[0, -0.8 - i * 0.2, 0]}>
+            <meshStandardMaterial color="#e08030" emissive="#e08030" emissiveIntensity={0.6} transparent opacity={0.7 - i * 0.2} />
+          </Sphere>
+        ))}
+      </group>
     </Float>
   );
 };
 
-const OrbitingSpheres = () => {
-  const groupRef = useRef<THREE.Group>(null);
+/* Pie chart - represents analytics */
+const PieChart3D = () => {
+  const ref = useRef<THREE.Group>(null);
   useFrame((state) => {
-    if (groupRef.current) {
-      groupRef.current.rotation.y = state.clock.elapsedTime * 0.3;
-      groupRef.current.rotation.z = Math.sin(state.clock.elapsedTime * 0.2) * 0.15;
+    if (ref.current) {
+      ref.current.rotation.y = state.clock.elapsedTime * 0.3;
+      ref.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.2) * 0.1;
     }
   });
+  const segments = [
+    { start: 0, length: Math.PI * 0.8, color: "#e08030" },
+    { start: Math.PI * 0.8, length: Math.PI * 0.5, color: "#7c4dff" },
+    { start: Math.PI * 1.3, length: Math.PI * 0.7, color: "#f0a050" },
+  ];
   return (
-    <group ref={groupRef}>
-      {[0, 1, 2, 3, 4].map((i) => {
-        const angle = (i / 5) * Math.PI * 2;
-        return (
-          <Sphere key={i} args={[0.12, 16, 16]} position={[Math.cos(angle) * 1.8, Math.sin(angle) * 1.8, 0]}>
-            <meshStandardMaterial color={i % 2 === 0 ? "#e08030" : "#7c4dff"} roughness={0.3} metalness={0.7} />
-          </Sphere>
-        );
-      })}
-    </group>
+    <Float speed={1.8} rotationIntensity={0.3} floatIntensity={0.6}>
+      <group ref={ref} position={[-2, 1, -1.5]} scale={0.5}>
+        {segments.map((seg, i) => (
+          <mesh key={i}>
+            <cylinderGeometry args={[0.8, 0.8, 0.15, 32, 1, false, seg.start, seg.length]} />
+            <meshStandardMaterial color={seg.color} roughness={0.2} metalness={0.8} />
+          </mesh>
+        ))}
+      </group>
+    </Float>
   );
 };
 
-const FloatingCubes = () => {
-  const groupRef = useRef<THREE.Group>(null);
+/* Floating @ symbol rings - email marketing */
+const EmailRings = () => {
+  const ref = useRef<THREE.Group>(null);
   useFrame((state) => {
-    if (groupRef.current) {
-      groupRef.current.rotation.y = state.clock.elapsedTime * 0.15;
+    if (ref.current) {
+      ref.current.rotation.y = state.clock.elapsedTime * 0.15;
+      ref.current.rotation.z = Math.sin(state.clock.elapsedTime * 0.3) * 0.1;
     }
   });
   return (
-    <group ref={groupRef}>
-      {[0, 1, 2].map((i) => (
-        <Float key={i} speed={1.5 + i * 0.5} floatIntensity={0.6}>
-          <Box
-            args={[0.25, 0.25, 0.25]}
-            position={[(i - 1) * 2.2, (i - 1) * 0.5, -1 - i * 0.5]}
-            rotation={[i * 0.5, i * 0.3, i * 0.2]}
-          >
-            <meshStandardMaterial
-              color={i === 1 ? "#7c4dff" : "#e08030"}
-              roughness={0.3}
-              metalness={0.7}
-              opacity={0.8}
-              transparent
-            />
-          </Box>
-        </Float>
-      ))}
-    </group>
+    <Float speed={1.5} floatIntensity={0.5}>
+      <group ref={ref} position={[2.2, -0.8, -1]}>
+        <Torus args={[0.35, 0.05, 16, 32]}>
+          <meshStandardMaterial color="#e08030" roughness={0.15} metalness={0.9} />
+        </Torus>
+        <mesh position={[0.2, 0, 0]}>
+          <torusGeometry args={[0.2, 0.04, 16, 32, Math.PI * 1.5]} />
+          <meshStandardMaterial color="#7c4dff" roughness={0.2} metalness={0.85} />
+        </mesh>
+        <Sphere args={[0.04, 8, 8]} position={[0.2, -0.2, 0]}>
+          <meshStandardMaterial color="#7c4dff" roughness={0.2} metalness={0.85} />
+        </Sphere>
+      </group>
+    </Float>
   );
 };
 
@@ -79,9 +98,9 @@ const WorkScene = () => (
       <directionalLight position={[5, 3, 5]} intensity={0.5} color="#fff0e0" />
       <pointLight position={[-3, 2, 2]} intensity={0.4} color="#e08030" />
       <pointLight position={[3, -2, 1]} intensity={0.3} color="#7c4dff" />
-      <SpinningTorus />
-      <OrbitingSpheres />
-      <FloatingCubes />
+      <MarketingFunnel />
+      <PieChart3D />
+      <EmailRings />
     </Canvas>
   </div>
 );
