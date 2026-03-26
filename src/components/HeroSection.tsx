@@ -14,7 +14,9 @@ const HeroSection = () => {
     <section ref={ref} className="relative min-h-screen flex flex-col justify-center overflow-hidden" aria-label="Hero — Swayam Budake Digital Marketing Expert">
       {/* 3D Scene */}
       <div className="absolute right-0 top-0 w-full lg:w-3/5 h-full opacity-80">
-        <HeroScene />
+        <Suspense fallback={null}>
+          <HeroScene />
+        </Suspense>
       </div>
 
       {/* Moody gradient overlays */}

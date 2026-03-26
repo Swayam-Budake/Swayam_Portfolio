@@ -1,8 +1,8 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { useRef } from "react";
-import WorkScene from "./WorkScene";
+import { useRef, lazy, Suspense } from "react";
+const WorkScene = lazy(() => import("./WorkScene"));
 
 const projects = [
   {
@@ -125,7 +125,9 @@ const WorkSection = () => {
 
   return (
     <section id="work" ref={sectionRef} className="py-28 px-6 md:px-16 lg:px-24 relative overflow-hidden" aria-labelledby="work-heading">
-      <WorkScene />
+      <Suspense fallback={null}>
+        <WorkScene />
+      </Suspense>
       <motion.div style={{ y: bgY }} className="absolute inset-0 opacity-[0.02]">
         <div className="w-full h-full" style={{
           backgroundImage: "linear-gradient(hsl(32 100% 55%) 1px, transparent 1px), linear-gradient(90deg, hsl(32 100% 55%) 1px, transparent 1px)",

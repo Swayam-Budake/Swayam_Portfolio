@@ -1,7 +1,7 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { TrendingUp, Target, BarChart3, Megaphone } from "lucide-react";
-import { useRef } from "react";
-import AboutScene from "./AboutScene";
+import { useRef, lazy, Suspense } from "react";
+const AboutScene = lazy(() => import("./AboutScene"));
 
 const skills = [
   { icon: TrendingUp, label: "SEO & SEM", desc: "Search engine optimization, keyword research & paid search campaigns" },
@@ -66,7 +66,9 @@ const AboutSection = () => {
     <section id="about" ref={sectionRef} className="py-28 px-6 md:px-16 lg:px-24 relative overflow-hidden" aria-labelledby="about-heading">
       {/* 3D Scene background */}
       <div className="absolute top-0 right-0 w-full lg:w-1/2 h-full">
-        <AboutScene />
+        <Suspense fallback={null}>
+          <AboutScene />
+        </Suspense>
       </div>
 
       {/* Parallax decorative lines */}
