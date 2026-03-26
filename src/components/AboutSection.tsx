@@ -1,13 +1,13 @@
 import { motion, useScroll, useTransform } from "framer-motion";
-import { TrendingUp, Target, BarChart3, Megaphone } from "lucide-react";
+import { TrendingUp, Target, Megaphone, Brain } from "lucide-react";
 import { useRef, lazy, Suspense } from "react";
 const AboutScene = lazy(() => import("./AboutScene"));
 
 const skills = [
-  { icon: TrendingUp, label: "SEO & SEM", desc: "Search engine optimization, keyword research & paid search campaigns" },
-  { icon: Target, label: "Performance Marketing", desc: "ROI-focused PPC, Google Ads & conversion rate optimization" },
-  { icon: BarChart3, label: "Analytics & Insights", desc: "Google Analytics, data-driven marketing & campaign tracking" },
-  { icon: Megaphone, label: "Social Media & Branding", desc: "Instagram, LinkedIn, Facebook & TikTok marketing strategies" },
+  { icon: TrendingUp, label: "SEO & SEM", desc: "I turn searches into traffic\nOn-page SEO, keyword strategy & paid search built to rank, get clicked, and convert." },
+  { icon: Target, label: "Performance Marketing", desc: "I make every rupee perform\nMeta ad campaigns, audience targeting & sponsored content  built to drive real results, not just impressions." },
+  { icon: Megaphone, label: "Social Media & Branding", desc: "I build brands people remember\nScroll-stopping content and consistent brand voice across Instagram, LinkedIn & beyond." },
+  { icon: Brain, label: " Creative Strategy", desc: " shape ideas into impact\nBrand positioning, campaign concepts & content direction  turning briefs into work that resonates." },
 ];
 
 const SkillCard = ({ skill, i }: { skill: typeof skills[0]; i: number }) => (
@@ -42,7 +42,7 @@ const SkillCard = ({ skill, i }: { skill: typeof skills[0]; i: number }) => (
         </div>
       </motion.div>
       <h3 className="font-semibold mb-1 text-foreground">{skill.label}</h3>
-      <p className="text-sm text-muted-foreground">{skill.desc}</p>
+      <p className="text-sm text-muted-foreground whitespace-pre-line">{skill.desc}</p>
     </div>
 
     <motion.div
