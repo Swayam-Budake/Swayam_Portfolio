@@ -113,7 +113,7 @@ const AboutSection = () => {
               transition={{ delay: 0.3, duration: 0.7 }}
               className="text-muted-foreground text-lg leading-relaxed mb-4"
             >
-              I've helped real brands grow — from improving search visibility for an FMCG company to building social strategies that actually convert. I work at the intersection of data and creativity, which means campaigns that look good and perform.
+              I've helped <strong className="text-primary font-semibold">real brands grow</strong> — from improving <strong className="text-primary font-semibold">search visibility</strong> for an FMCG company to building <strong className="text-primary font-semibold">social strategies</strong> that actually convert. I work at the intersection of <strong className="text-primary font-semibold">data and creativity</strong>, which means campaigns that look good and perform.
             </motion.p>
             <motion.p
               initial={{ opacity: 0, y: 30 }}
@@ -122,7 +122,7 @@ const AboutSection = () => {
               transition={{ delay: 0.45, duration: 0.7 }}
               className="text-muted-foreground leading-relaxed text-lg"
             >
-              From performance marketing to creative strategy, I bring both execution and big-picture thinking to the table whether it's a startup finding its voice or a brand scaling its reach.
+              From <strong className="text-primary font-semibold">performance marketing</strong> to <strong className="text-primary font-semibold">creative strategy</strong>, I bring both execution and big-picture thinking to the table whether it's a startup finding its voice or a brand <strong className="text-primary font-semibold">scaling its reach</strong>.
             </motion.p>
           </motion.div>
 
