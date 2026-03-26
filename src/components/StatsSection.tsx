@@ -3,10 +3,10 @@ import { useRef } from "react";
 import StatsScene from "./StatsScene";
 
 const stats = [
-  { value: "50+", label: "Campaigns Delivered" },
-  { value: "3x", label: "Average ROI" },
-  { value: "10M+", label: "Impressions Generated" },
-  { value: "95%", label: "Client Retention" },
+  { value: "50+", label: "Marketing Campaigns Delivered" },
+  { value: "3x", label: "Average Client ROI" },
+  { value: "10M+", label: "Ad Impressions Generated" },
+  { value: "95%", label: "Client Retention Rate" },
 ];
 
 const StatsSection = () => {
@@ -16,9 +16,8 @@ const StatsSection = () => {
   const opacity = useTransform(scrollYProgress, [0, 0.5], [0, 1]);
 
   return (
-    <section ref={ref} className="py-24 px-6 md:px-16 lg:px-24 relative overflow-hidden">
+    <section ref={ref} className="py-24 px-6 md:px-16 lg:px-24 relative overflow-hidden" aria-label="Digital marketing results and performance metrics">
       <StatsScene />
-      {/* Horizontal glow line */}
       <motion.div
         className="absolute top-0 left-0 w-full h-[1px]"
         style={{ background: "linear-gradient(90deg, transparent, hsl(32 100% 55% / 0.3), hsl(260 60% 55% / 0.2), transparent)" }}
@@ -29,10 +28,11 @@ const StatsSection = () => {
       />
 
       <motion.div style={{ scale, opacity }} className="max-w-6xl mx-auto relative">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8" role="list">
           {stats.map((stat, i) => (
             <motion.div
               key={stat.label}
+              role="listitem"
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
