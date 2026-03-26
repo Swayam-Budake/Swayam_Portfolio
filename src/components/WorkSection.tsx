@@ -6,43 +6,35 @@ import WorkScene from "./WorkScene";
 
 const projects = [
   {
-    title: "E-Commerce Growth Campaign",
-    desc: "Scaled an e-commerce brand's revenue by 3x through a combination of SEO optimization, Google Ads, and social media retargeting.",
-    tags: ["SEO", "Google Ads", "Social Media"],
+    title: "E-Commerce SEO & Google Ads Growth Campaign",
+    desc: "Scaled an e-commerce brand's revenue by 3x through comprehensive SEO optimization, Google Ads PPC management, and social media retargeting across Instagram and Facebook.",
+    tags: ["SEO", "Google Ads", "Social Media Marketing", "Retargeting"],
     metric: "300% Revenue Growth",
   },
   {
-    title: "SaaS Lead Generation",
-    desc: "Designed and executed a B2B lead generation funnel that reduced cost per acquisition by 45% while increasing qualified leads.",
-    tags: ["Content Marketing", "LinkedIn Ads", "CRO"],
+    title: "B2B SaaS Lead Generation & Content Marketing",
+    desc: "Designed and executed a B2B lead generation funnel using LinkedIn Ads, content marketing, and conversion rate optimization that reduced cost per acquisition by 45%.",
+    tags: ["Content Marketing", "LinkedIn Ads", "CRO", "Lead Generation"],
     metric: "45% Lower CPA",
   },
   {
-    title: "Brand Awareness Campaign",
-    desc: "Launched a multi-channel brand awareness campaign that reached 2M+ impressions and increased brand recall by 60%.",
-    tags: ["Branding", "Display Ads", "Influencer Marketing"],
+    title: "Multi-Channel Brand Awareness & Influencer Campaign",
+    desc: "Launched a multi-channel brand awareness campaign across Instagram, YouTube, and TikTok with influencer partnerships, reaching 2M+ impressions and increasing brand recall by 60%.",
+    tags: ["Branding", "Influencer Marketing", "Display Ads", "TikTok Marketing"],
     metric: "2M+ Impressions",
   },
 ];
 
 const ProjectCard = ({ project, i }: { project: typeof projects[0]; i: number }) => {
   const cardRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: cardRef,
-    offset: ["start end", "center center"],
-  });
+  const { scrollYProgress } = useScroll({ target: cardRef, offset: ["start end", "center center"] });
   const cardRotateX = useTransform(scrollYProgress, [0, 1], [8, 0]);
   const cardScale = useTransform(scrollYProgress, [0, 1], [0.92, 1]);
 
   return (
-    <motion.div
+    <motion.article
       ref={cardRef}
-      style={{
-        rotateX: cardRotateX,
-        scale: cardScale,
-        transformStyle: "preserve-3d",
-        perspective: "1200px",
-      }}
+      style={{ rotateX: cardRotateX, scale: cardScale, transformStyle: "preserve-3d", perspective: "1200px" }}
       initial={{ opacity: 0, x: i % 2 === 0 ? -100 : 100 }}
       whileInView={{ opacity: 1, x: 0 }}
       viewport={{ once: true, margin: "-60px" }}
@@ -55,18 +47,11 @@ const ProjectCard = ({ project, i }: { project: typeof projects[0]; i: number })
       }}
       className="group relative bg-card rounded-2xl border border-border p-8 md:p-10 hover:border-primary/30 transition-colors cursor-pointer overflow-hidden"
     >
-      {/* Animated gradient sweep */}
       <motion.div
         className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700"
-        style={{
-          background: "linear-gradient(135deg, hsl(32 100% 55% / 0.06), transparent 40%, hsl(260 60% 55% / 0.04))",
-        }}
+        style={{ background: "linear-gradient(135deg, hsl(32 100% 55% / 0.06), transparent 40%, hsl(260 60% 55% / 0.04))" }}
       />
-
-      {/* Glowing orb on hover */}
       <div className="absolute -top-20 -right-20 w-44 h-44 rounded-full blur-[70px] bg-primary/0 group-hover:bg-primary/10 transition-all duration-700" />
-
-      {/* Animated accent line */}
       <motion.div
         className="absolute left-0 top-0 w-[2px] rounded-full"
         style={{ background: "linear-gradient(180deg, hsl(32 100% 55%), hsl(260 60% 55%), transparent)" }}
@@ -75,8 +60,6 @@ const ProjectCard = ({ project, i }: { project: typeof projects[0]; i: number })
         viewport={{ once: true }}
         transition={{ duration: 1.2, delay: i * 0.15 + 0.3, ease: "easeOut" }}
       />
-
-      {/* Card number */}
       <motion.span
         className="absolute top-4 right-6 text-6xl font-bold text-foreground/[0.03] select-none"
         initial={{ opacity: 0, scale: 0.5 }}
@@ -96,7 +79,7 @@ const ProjectCard = ({ project, i }: { project: typeof projects[0]; i: number })
               whileHover={{ x: 4, y: -4, rotate: 45 }}
               transition={{ type: "spring", stiffness: 400 }}
             >
-              <ArrowUpRight className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
+              <ArrowUpRight className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" aria-hidden="true" />
             </motion.div>
           </div>
           <p className="text-muted-foreground leading-relaxed mb-4 max-w-xl">{project.desc}</p>
@@ -130,7 +113,7 @@ const ProjectCard = ({ project, i }: { project: typeof projects[0]; i: number })
           </p>
         </motion.div>
       </div>
-    </motion.div>
+    </motion.article>
   );
 };
 
@@ -141,37 +124,15 @@ const WorkSection = () => {
   const rotate = useTransform(scrollYProgress, [0, 1], [0, -360]);
 
   return (
-    <section id="work" ref={sectionRef} className="py-28 px-6 md:px-16 lg:px-24 relative overflow-hidden">
-      {/* 3D Scene */}
+    <section id="work" ref={sectionRef} className="py-28 px-6 md:px-16 lg:px-24 relative overflow-hidden" aria-labelledby="work-heading">
       <WorkScene />
-
-      {/* Parallax grid */}
       <motion.div style={{ y: bgY }} className="absolute inset-0 opacity-[0.02]">
         <div className="w-full h-full" style={{
           backgroundImage: "linear-gradient(hsl(32 100% 55%) 1px, transparent 1px), linear-gradient(90deg, hsl(32 100% 55%) 1px, transparent 1px)",
           backgroundSize: "80px 80px",
         }} />
       </motion.div>
-
-      {/* Rotating accent */}
-      <motion.div
-        style={{ rotate }}
-        className="absolute bottom-20 right-20 w-20 h-20 border border-secondary/10 rounded-lg pointer-events-none"
-      />
-
-      {/* Floating dots */}
-      {[0, 1, 2, 3].map((i) => (
-        <motion.div
-          key={i}
-          className="absolute w-1.5 h-1.5 rounded-full bg-primary/20"
-          style={{ top: `${20 + i * 20}%`, left: `${5 + i * 8}%` }}
-          animate={{
-            y: [0, -25 + i * 5, 0],
-            opacity: [0.15, 0.4, 0.15],
-          }}
-          transition={{ duration: 5 + i, repeat: Infinity, delay: i * 0.6 }}
-        />
-      ))}
+      <motion.div style={{ rotate }} className="absolute bottom-20 right-20 w-20 h-20 border border-secondary/10 rounded-lg pointer-events-none" />
 
       <div className="max-w-6xl mx-auto relative z-10">
         <motion.div
@@ -187,11 +148,11 @@ const WorkSection = () => {
             transition={{ duration: 1 }}
             className="h-[2px] bg-gradient-to-r from-primary to-secondary mb-5"
           />
-          <p className="text-primary font-medium tracking-[0.3em] uppercase text-xs mb-4">Work</p>
-          <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-14">
-            Selected{" "}
+          <p className="text-primary font-medium tracking-[0.3em] uppercase text-xs mb-4">Portfolio</p>
+          <h2 id="work-heading" className="text-4xl md:text-5xl font-bold tracking-tight mb-14">
+            Digital marketing{" "}
             <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-              projects
+              case studies
             </span>
           </h2>
         </motion.div>
