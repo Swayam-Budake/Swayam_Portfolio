@@ -1,7 +1,7 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowDown } from "lucide-react";
-import { useRef } from "react";
-import HeroScene from "./HeroScene";
+import { useRef, lazy, Suspense } from "react";
+const HeroScene = lazy(() => import("./HeroScene"));
 
 const HeroSection = () => {
   const ref = useRef(null);
