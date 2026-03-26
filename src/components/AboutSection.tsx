@@ -99,7 +99,7 @@ const AboutSection = () => {
                 viewport={{ once: true }}
                 transition={{ delay: 0.5, duration: 0.6 }}
               >
-                drives growth
+                things happen
               </motion.span>
               .
             </h2>
@@ -111,16 +111,16 @@ const AboutSection = () => {
               transition={{ delay: 0.3, duration: 0.7 }}
               className="text-muted-foreground text-lg leading-relaxed mb-4"
             >
-              With deep expertise in <strong className="text-foreground">search engine optimization</strong>, <strong className="text-foreground">social media marketing</strong>, and <strong className="text-foreground">Google Ads management</strong>, I craft data-driven digital marketing strategies that don't just look good—they deliver measurable results and real ROI.
+              I've helped real brands grow — from improving search visibility for an FMCG company to building social strategies that actually convert. I work at the intersection of data and creativity, which means campaigns that look good and perform.
             </motion.p>
             <motion.p
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.45, duration: 0.7 }}
-              className="text-muted-foreground leading-relaxed"
+              className="text-muted-foreground leading-relaxed text-lg"
             >
-              From <strong className="text-foreground">content marketing</strong> and <strong className="text-foreground">email automation</strong> to <strong className="text-foreground">influencer partnerships</strong> and <strong className="text-foreground">conversion rate optimization</strong>, I bring a holistic approach to every campaign, ensuring maximum impact across all digital channels.
+              From performance marketing to creative strategy, I bring both execution and big-picture thinking to the table whether it's a startup finding its voice or a brand scaling its reach.
             </motion.p>
           </motion.div>
 
