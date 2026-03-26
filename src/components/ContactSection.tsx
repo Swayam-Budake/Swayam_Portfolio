@@ -1,7 +1,7 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Mail, Linkedin, Twitter, Send } from "lucide-react";
-import { useRef } from "react";
-import ContactScene from "./ContactScene";
+import { useRef, lazy, Suspense } from "react";
+const ContactScene = lazy(() => import("./ContactScene"));
 
 const ContactSection = () => {
   const sectionRef = useRef(null);
@@ -12,7 +12,9 @@ const ContactSection = () => {
 
   return (
     <section id="contact" ref={sectionRef} className="py-28 px-6 md:px-16 lg:px-24 relative overflow-hidden" aria-labelledby="contact-heading">
-      <ContactScene />
+      <Suspense fallback={null}>
+        <ContactScene />
+      </Suspense>
 
       <motion.div style={{ rotate: orbRotate }} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full border border-primary/5 pointer-events-none" />
       <motion.div style={{ rotate: orbRotate }} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full border border-secondary/5 pointer-events-none" />

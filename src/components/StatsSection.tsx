@@ -1,6 +1,6 @@
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
-import StatsScene from "./StatsScene";
+import { useRef, lazy, Suspense } from "react";
+const StatsScene = lazy(() => import("./StatsScene"));
 
 const stats = [
   { value: "50+", label: "Marketing Campaigns Delivered" },
@@ -17,7 +17,9 @@ const StatsSection = () => {
 
   return (
     <section ref={ref} className="py-24 px-6 md:px-16 lg:px-24 relative overflow-hidden" aria-label="Digital marketing results and performance metrics">
-      <StatsScene />
+      <Suspense fallback={null}>
+        <StatsScene />
+      </Suspense>
       <motion.div
         className="absolute top-0 left-0 w-full h-[1px]"
         style={{ background: "linear-gradient(90deg, transparent, hsl(32 100% 55% / 0.3), hsl(260 60% 55% / 0.2), transparent)" }}
