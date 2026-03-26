@@ -70,7 +70,7 @@ const HeroSection = () => {
             transition={{ duration: 1, delay: 0.3 }}
           />
           <p className="text-primary font-medium tracking-[0.3em] uppercase text-xs">
-            Digital Marketing Expert
+            Digital Marketing Professional
           </p>
         </motion.div>
 
@@ -105,9 +105,9 @@ const HeroSection = () => {
           transition={{ duration: 0.8, delay: 0.7 }}
           className="text-muted-foreground text-lg md:text-xl max-w-lg leading-relaxed mb-10"
         >
-          I help brands grow through <strong className="text-foreground">data-driven SEO strategies</strong>,
-          compelling <strong className="text-foreground">social media marketing</strong>,
-          and <strong className="text-foreground">performance marketing</strong> that delivers measurable ROI.
+          From SEO and paid ads to creative strategy and social media — I bring both the data and the ideas.
+          I've worked with real brands, run real campaigns, and delivered real results.
+          I don't just run campaigns. I build strategies that rank, convert, and stick.
         </motion.p>
 
         <motion.div
