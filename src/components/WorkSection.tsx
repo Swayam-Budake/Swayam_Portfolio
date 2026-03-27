@@ -6,22 +6,22 @@ const WorkScene = lazy(() => import("./WorkScene"));
 
 const projects = [
   {
-    title: "E-Commerce SEO & Google Ads Growth Campaign",
-    desc: "Scaled an e-commerce brand's revenue by 3x through comprehensive SEO optimization, Google Ads PPC management, and social media retargeting across Instagram and Facebook.",
-    tags: ["SEO", "Google Ads", "Social Media Marketing", "Retargeting"],
-    metric: "300% Revenue Growth",
+    title: "Social Media Creative Strategy — 2Stories",
+    desc: "Developed content ideas, captions, image prompts and a full content calendar to build a consistent and engaging social media presence for a bar and restaurant brand.",
+    tags: ["Content Strategy", "Content Calendar", "Copywriting", "Creative Direction"],
+    metric: "4-Week Content Calendar",
   },
   {
-    title: "B2B SaaS Lead Generation & Content Marketing",
-    desc: "Designed and executed a B2B lead generation funnel using LinkedIn Ads, content marketing, and conversion rate optimization that reduced cost per acquisition by 45%.",
-    tags: ["Content Marketing", "LinkedIn Ads", "CRO", "Lead Generation"],
-    metric: "45% Lower CPA",
+    title: "Event Brand Content Strategy — Sitara Events",
+    desc: "Created content ideas, captions and image prompts tailored to an event company's audience — helping them communicate their brand story consistently across social media.",
+    tags: ["Content Strategy", "Event Marketing", "Copywriting", "Creative Direction"],
+    metric: "Multi-Platform Content",
   },
   {
-    title: "Multi-Channel Brand Awareness & Influencer Campaign",
-    desc: "Launched a multi-channel brand awareness campaign across Instagram, YouTube, and TikTok with influencer partnerships, reaching 2M+ impressions and increasing brand recall by 60%.",
-    tags: ["Branding", "Influencer Marketing", "Display Ads", "TikTok Marketing"],
-    metric: "2M+ Impressions",
+    title: "Club & Lifestyle Content — CRCC Club Sangli",
+    desc: "Built a content calendar with creative post ideas, captions and image prompts to help a club brand maintain an active and on-brand social media presence.",
+    tags: ["Content Calendar", "Lifestyle Marketing", "Copywriting", "Creative Direction"],
+    metric: "Consistent Brand Voice",
   },
 ];
 
@@ -105,11 +105,8 @@ const ProjectCard = ({ project, i }: { project: typeof projects[0]; i: number })
           whileHover={{ scale: 1.08, rotate: 2 }}
           transition={{ type: "spring", stiffness: 300 }}
         >
-          <p className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-            {project.metric.split(" ")[0]}
-          </p>
-          <p className="text-xs text-muted-foreground tracking-wider uppercase">
-            {project.metric.split(" ").slice(1).join(" ")}
+          <p className="text-sm font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent leading-tight text-center">
+            {project.metric}
           </p>
         </motion.div>
       </div>
@@ -152,9 +149,9 @@ const WorkSection = () => {
           />
           <p className="text-primary font-medium tracking-[0.3em] uppercase text-xs mb-4">Portfolio</p>
           <h2 id="work-heading" className="text-4xl md:text-5xl font-bold tracking-tight mb-14">
-            Digital marketing{" "}
+            Real Clients.{" "}
             <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-              case studies
+              Real Work.
             </span>
           </h2>
         </motion.div>
