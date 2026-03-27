@@ -101,7 +101,7 @@ const ContactSection = () => {
           </motion.p>
 
           <motion.a
-            href="mailto:hello@swayambudake.com"
+            href="mailto:budakeswayam@gmail.com"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
