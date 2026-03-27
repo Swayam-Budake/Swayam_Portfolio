@@ -1,5 +1,5 @@
 import { motion, useScroll, useTransform } from "framer-motion";
-import { Mail, Linkedin, Twitter, Send } from "lucide-react";
+import { Mail, Linkedin, Send } from "lucide-react";
 import { useRef, lazy, Suspense } from "react";
 const ContactScene = lazy(() => import("./ContactScene"));
 
@@ -125,9 +125,8 @@ const ContactSection = () => {
 
           <nav className="flex justify-center gap-5" aria-label="Social media links">
             {[
-              { icon: Linkedin, href: "https://linkedin.com/in/swayambudake", label: "LinkedIn — Swayam Budake" },
-              { icon: Twitter, href: "https://twitter.com/swayambudake", label: "Twitter — Swayam Budake" },
-              { icon: Mail, href: "mailto:hello@swayambudake.com", label: "Email Swayam Budake" },
+              { icon: Linkedin, href: "https://www.linkedin.com/in/swayam-budake", label: "LinkedIn — Swayam Budake" },
+              { icon: Mail, href: "mailto:budakeswayam@gmail.com", label: "Email Swayam Budake" },
             ].map(({ icon: Icon, href, label }, i) => (
               <motion.a
                 key={label}
